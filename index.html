@@ -1773,12 +1773,20 @@
   (function() {
     const tabs = document.querySelectorAll('.price-tab');
     const panels = document.querySelectorAll('.price-panel');
+    const topTabs = document.querySelector('.price-tabs:not(.price-tabs-bottom)');
 
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         const cat = tab.dataset.cat;
         tabs.forEach(t => t.classList.toggle('active', t.dataset.cat === cat));
         panels.forEach(p => p.classList.toggle('active', p.dataset.cat === cat));
+
+        // Si se usó el set de tabs de abajo (mobile), subir para ver la
+        // categoría seleccionada desde el principio.
+        if (tab.closest('.price-tabs-bottom') && topTabs) {
+          const target = topTabs.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: target, behavior: 'smooth' });
+        }
       });
     });
   })();
