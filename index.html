@@ -926,73 +926,182 @@
     .whatsapp-float svg { width: 28px; height: 28px; fill: white; }
 
     /* ── Pricing Carousel ── */
-    .pricing-carousel {
-      position: relative;
-      overflow: hidden;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .pricing-track {
+    /* ── Pricing (nativo) ── */
+    .price-tabs {
       display: flex;
-      transition: transform 0.4s ease;
-    }
-
-    .pricing-slide {
-      min-width: 100%;
-      padding: 0 8px;
-      box-sizing: border-box;
-    }
-
-    .pricing-slide img {
-      width: 100%;
-      border-radius: 12px;
-      display: block;
-    }
-
-    .pricing-nav {
-      display: flex;
+      flex-wrap: wrap;
       justify-content: center;
-      align-items: center;
-      gap: 24px;
-      margin-top: 24px;
+      gap: 10px;
+      margin-bottom: 56px;
     }
 
-    .pricing-nav button {
-      background: none;
-      border: 1px solid var(--gold);
-      color: var(--gold);
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      font-size: 1.2rem;
+    .price-tab {
+      background: transparent;
+      border: 1px solid rgba(201, 169, 110, 0.3);
+      color: var(--light-gray);
+      padding: 11px 24px;
+      border-radius: 40px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
       cursor: pointer;
-      transition: background 0.3s, color 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      transition: all 0.35s ease;
+      white-space: nowrap;
     }
 
-    .pricing-nav button:hover {
+    .price-tab:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .price-tab.active {
       background: var(--gold);
+      border-color: var(--gold);
       color: var(--black);
     }
 
-    .pricing-dots {
+    .price-panel { display: none; }
+
+    .price-panel.active {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 56px;
+      align-items: start;
+      text-align: left;
+      animation: priceFade 0.5s ease;
+    }
+
+    @keyframes priceFade {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .price-visual {
+      position: relative;
+      min-height: 460px;
+      border-radius: 16px;
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+      border: 1px solid rgba(201, 169, 110, 0.18);
+    }
+
+    .price-visual::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10,10,10,0.15) 0%, rgba(10,10,10,0.55) 55%, rgba(10,10,10,0.92) 100%);
+    }
+
+    .price-visual-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 32px 30px;
+      z-index: 1;
+    }
+
+    .price-visual-kicker {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--gold);
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .price-visual-overlay h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 2.2rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .price-list { padding-top: 4px; }
+
+    .price-row {
       display: flex;
-      gap: 8px;
+      align-items: baseline;
+      gap: 14px;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(201, 169, 110, 0.1);
     }
 
-    .pricing-dots span {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(201, 169, 110, 0.3);
-      transition: background 0.3s;
+    .price-name {
+      color: var(--off-white);
+      font-size: 0.92rem;
+      font-weight: 400;
+      letter-spacing: 0.4px;
+      line-height: 1.4;
     }
 
-    .pricing-dots span.active {
+    .price-name span {
+      color: var(--light-gray);
+      font-weight: 300;
+    }
+
+    .price-leader {
+      flex: 1 1 auto;
+      border-bottom: 1px dotted rgba(201, 169, 110, 0.35);
+      transform: translateY(-5px);
+      min-width: 16px;
+    }
+
+    .price-val {
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      white-space: nowrap;
+      letter-spacing: 0.5px;
+    }
+
+    .price-val small {
+      font-size: 0.72rem;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--light-gray);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-right: 4px;
+    }
+
+    .tag-new {
+      display: inline-block;
+      vertical-align: middle;
       background: var(--gold);
+      color: var(--black);
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 2px 7px;
+      border-radius: 3px;
+      margin-left: 8px;
+      text-transform: uppercase;
+    }
+
+    .price-subhead {
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 300;
+      margin: 28px 0 4px;
+    }
+
+    .price-note {
+      color: var(--light-gray);
+      font-size: 0.78rem;
+      font-style: italic;
+      line-height: 1.6;
+      margin-top: 20px;
+      padding-left: 2px;
     }
 
     /* ── Animations ── */
@@ -1038,6 +1147,9 @@
       .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 0 8px; }
       .stat-item h3 { font-size: 2rem; }
       .stat-item p { font-size: 0.55rem; letter-spacing: 2px; }
+
+      .price-panel.active { grid-template-columns: 1fr; gap: 28px; }
+      .price-visual { min-height: 280px; }
     }
 
     @media (max-width: 640px) {
@@ -1048,6 +1160,11 @@
       .team-highlights { grid-template-columns: 1fr 1fr; gap: 16px; }
       .footer-grid { grid-template-columns: 1fr; gap: 32px; }
       .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+
+      .price-tabs { gap: 8px; margin-bottom: 40px; }
+      .price-tab { padding: 9px 16px; font-size: 0.62rem; letter-spacing: 1px; }
+      .price-name { font-size: 0.85rem; }
+      .price-val { font-size: 1.15rem; }
     }
   </style>
 </head>
@@ -1239,22 +1356,149 @@
 <section class="section-padding" id="precios" style="background: var(--dark);">
   <div class="container text-center">
     <h2 class="section-title fade-in">Lista de precios</h2>
+    <p class="section-subtitle fade-in">nuestros servicios</p>
+    <div class="divider"></div>
 
-    <div class="pricing-carousel fade-in" id="pricingCarousel">
-      <div class="pricing-track" id="pricingTrack">
-        <div class="pricing-slide"><img src="precios/WhatsApp Image 2026-03-15 at 14.31.29.jpeg" alt="Precios 1"></div>
-        <div class="pricing-slide"><img src="precios/WhatsApp Image 2026-03-15 at 14.44.05.jpeg" alt="Precios 2"></div>
-        <div class="pricing-slide"><img src="precios/WhatsApp Image 2026-03-15 at 14.44.06.jpeg" alt="Precios 3"></div>
-        <div class="pricing-slide"><img src="precios/dvdfvdf.jpeg" alt="Precios 4"></div>
-        <div class="pricing-slide"><img src="precios/dvdvdv.jpeg" alt="Precios 5"></div>
-        <div class="pricing-slide"><img src="precios/xvxfv.jpeg" alt="Precios 6"></div>
-      </div>
-      <div class="pricing-nav">
-        <button id="pricingPrev">&#8249;</button>
-        <div class="pricing-dots" id="pricingDots"></div>
-        <button id="pricingNext">&#8250;</button>
-      </div>
+    <div class="price-tabs fade-in">
+      <button class="price-tab active" data-cat="manos">Manos</button>
+      <button class="price-tab" data-cat="pies">Pies</button>
+      <button class="price-tab" data-cat="eyes">Cejas &amp; Pestañas</button>
+      <button class="price-tab" data-cat="facial">Facial</button>
+      <button class="price-tab" data-cat="odonto">Odontología</button>
+      <button class="price-tab" data-cat="labios">Labios</button>
     </div>
+
+    <div class="price-panels fade-in">
+
+      <!-- Manos -->
+      <div class="price-panel active" data-cat="manos">
+        <div class="price-visual" style="background-image: url('portada uñas.jpeg');">
+          <div class="price-visual-overlay">
+            <span class="price-visual-kicker">Comenzamos por el cuidado de tus uñas</span>
+            <h3>Manos</h3>
+          </div>
+        </div>
+        <div class="price-list">
+          <div class="price-row"><span class="price-name">Esculpidas Acrílicas</span><span class="price-leader"></span><span class="price-val">$54.000</span></div>
+          <div class="price-row"><span class="price-name">Esculpidas en Polygel</span><span class="price-leader"></span><span class="price-val">$50.000</span></div>
+          <div class="price-row"><span class="price-name">Remoción <span>· Esculpidas</span></span><span class="price-leader"></span><span class="price-val">$22.000</span></div>
+          <div class="price-row"><span class="price-name">Kapping Acrílico</span><span class="price-leader"></span><span class="price-val">$47.000</span></div>
+          <div class="price-row"><span class="price-name">Kapping Polygel</span><span class="price-leader"></span><span class="price-val">$45.000</span></div>
+          <div class="price-row"><span class="price-name">Remoción <span>· Kapping o Soft Gel</span></span><span class="price-leader"></span><span class="price-val">$18.000</span></div>
+          <div class="price-row"><span class="price-name">Esmaltado Semi-permanente</span><span class="price-leader"></span><span class="price-val">$28.000</span></div>
+          <div class="price-row"><span class="price-name">Remoción <span>· Esmaltado Semipermanente</span></span><span class="price-leader"></span><span class="price-val">$12.000</span></div>
+          <div class="price-row"><span class="price-name">Esmaltado Tradicional</span><span class="price-leader"></span><span class="price-val">$25.000</span></div>
+          <div class="price-row"><span class="price-name">Actual Care <span>· Cuidado de manos y uñas</span></span><span class="price-leader"></span><span class="price-val">$25.000</span></div>
+          <p class="price-note">Todos los servicios de Esculpidas y Kapping incluyen esmaltado semi-permanente.</p>
+        </div>
+      </div>
+
+      <!-- Pies -->
+      <div class="price-panel" data-cat="pies">
+        <div class="price-visual" style="background-image: url('portada pies.jpeg');">
+          <div class="price-visual-overlay">
+            <span class="price-visual-kicker">Cuidado integral para tus pies</span>
+            <h3>Pies</h3>
+          </div>
+        </div>
+        <div class="price-list">
+          <div class="price-row"><span class="price-name">Belleza de Pies <span>· Esmaltado Tradicional</span></span><span class="price-leader"></span><span class="price-val">$27.000</span></div>
+          <div class="price-row"><span class="price-name">Belleza de Pies <span>· Esmaltado Semi-permanente</span></span><span class="price-leader"></span><span class="price-val">$30.000</span></div>
+          <div class="price-row"><span class="price-name">Podo-estética</span><span class="price-leader"></span><span class="price-val">$37.000</span></div>
+          <div class="price-row"><span class="price-name">Podo-estética <span>+ Esmaltado Semi-permanente</span></span><span class="price-leader"></span><span class="price-val">$59.000</span></div>
+          <div class="price-row"><span class="price-name">Podología de Alta Complejidad</span><span class="price-leader"></span><span class="price-val">$45.000</span></div>
+          <div class="price-row"><span class="price-name">Podología de Alta Complejidad <span>+ Esmaltado Semi-permanente</span></span><span class="price-leader"></span><span class="price-val">$67.000</span></div>
+          <div class="price-row"><span class="price-name">Estudio de la Pisada y Plantilla Pédica</span><span class="price-leader"></span><span class="price-val">$78.000</span></div>
+        </div>
+      </div>
+
+      <!-- Cejas & Pestañas -->
+      <div class="price-panel" data-cat="eyes">
+        <div class="price-visual" style="background-image: url('portada-cejas.jpeg');">
+          <div class="price-visual-overlay">
+            <span class="price-visual-kicker">Realza tu mirada</span>
+            <h3>Cejas &amp; Pestañas</h3>
+          </div>
+        </div>
+        <div class="price-list">
+          <div class="price-row"><span class="price-name">Diseño + Perfilado de Cejas</span><span class="price-leader"></span><span class="price-val">$18.000</span></div>
+          <div class="price-row"><span class="price-name">Laminado <span>· Incluye perfilado + nutrición</span></span><span class="price-leader"></span><span class="price-val">$43.000</span></div>
+          <div class="price-row"><span class="price-name">Laminado + Henna<span class="tag-new">New</span></span><span class="price-leader"></span><span class="price-val">$64.000</span></div>
+          <div class="price-row"><span class="price-name">Lifting de Pestañas <span>· Incluye nutrición + color</span></span><span class="price-leader"></span><span class="price-val">$45.000</span></div>
+          <div class="price-row"><span class="price-name">Henna Pura <span>· Máxima duración</span></span><span class="price-leader"></span><span class="price-val">$30.000</span></div>
+          <div class="price-row"><span class="price-name">Nutrición de Pestañas y Cejas</span><span class="price-leader"></span><span class="price-val">$18.000</span></div>
+          <div class="price-row"><span class="price-name">Microblading</span><span class="price-leader"></span><span class="price-val">$250.000</span></div>
+
+          <p class="price-subhead">Extensiones</p>
+          <div class="price-row"><span class="price-name">Extensiones de Pestañas <span>· Pelo x pelo</span></span><span class="price-leader"></span><span class="price-val">$43.000</span></div>
+          <div class="price-row"><span class="price-name">Extensiones de Pestañas <span>· Efecto Rimmel</span></span><span class="price-leader"></span><span class="price-val">$45.000</span></div>
+          <div class="price-row"><span class="price-name">Extensiones de Pestañas <span>· Tech 4D / 6D</span></span><span class="price-leader"></span><span class="price-val">$53.000</span></div>
+          <div class="price-row"><span class="price-name">Remoción <span>· Extensiones de pestañas</span></span><span class="price-leader"></span><span class="price-val">$18.000</span></div>
+
+          <p class="price-subhead">Crecimiento natural <span class="tag-new">New</span></p>
+          <div class="price-row"><span class="price-name">Tratamiento de Crecimiento en Cejas <span>· Incluye laminado + nutrición</span></span><span class="price-leader"></span><span class="price-val">$61.000</span></div>
+          <div class="price-row"><span class="price-name">Tratamiento de Crecimiento en Pestañas <span>· Incluye lifting + nutrición</span></span><span class="price-leader"></span><span class="price-val">$63.000</span></div>
+        </div>
+      </div>
+
+      <!-- Facial -->
+      <div class="price-panel" data-cat="facial">
+        <div class="price-visual" style="background-image: url('portada orofacial.jpeg');">
+          <div class="price-visual-overlay">
+            <span class="price-visual-kicker">El secreto de una piel radiante</span>
+            <h3>Facial</h3>
+          </div>
+        </div>
+        <div class="price-list">
+          <div class="price-row"><span class="price-name">Botox Preventivo</span><span class="price-leader"></span><span class="price-val">$270.000</span></div>
+          <div class="price-row"><span class="price-name">Botox 3 Zonas</span><span class="price-leader"></span><span class="price-val">$300.000</span></div>
+          <div class="price-row"><span class="price-name">Botox Bruxismo</span><span class="price-leader"></span><span class="price-val">$250.000</span></div>
+          <div class="price-row"><span class="price-name">Mesolift <span>· Hidratación facial</span></span><span class="price-leader"></span><span class="price-val">$230.000</span></div>
+          <div class="price-row"><span class="price-name">Bioestimuladores de Colágeno<span class="tag-new">New</span></span><span class="price-leader"></span><span class="price-val">$300.000</span></div>
+
+          <p class="price-subhead">Depilación con hilo</p>
+          <div class="price-row"><span class="price-name">Depi Rostro Completo</span><span class="price-leader"></span><span class="price-val">$24.000</span></div>
+          <div class="price-row"><span class="price-name">Depi Bozo</span><span class="price-leader"></span><span class="price-val">$13.000</span></div>
+          <div class="price-row"><span class="price-name">Depi Mentón</span><span class="price-leader"></span><span class="price-val">$12.000</span></div>
+        </div>
+      </div>
+
+      <!-- Odontología -->
+      <div class="price-panel" data-cat="odonto">
+        <div class="price-visual" style="background-image: url('portada odonto.jpeg');">
+          <div class="price-visual-overlay">
+            <span class="price-visual-kicker">Y ahora sí, tu sonrisa</span>
+            <h3>Odontología Estética</h3>
+          </div>
+        </div>
+        <div class="price-list">
+          <div class="price-row"><span class="price-name">Primera Consulta</span><span class="price-leader"></span><span class="price-val">$35.000</span></div>
+          <div class="price-row"><span class="price-name">Terapia Periodontal <span>· Limpieza dental</span></span><span class="price-leader"></span><span class="price-val">$80.000</span></div>
+          <div class="price-row"><span class="price-name">Restauraciones</span><span class="price-leader"></span><span class="price-val"><small>Desde</small>$85.000</span></div>
+          <div class="price-row"><span class="price-name">Placa de Bruxismo Personalizada</span><span class="price-leader"></span><span class="price-val">$180.000</span></div>
+          <div class="price-row"><span class="price-name">Blanqueamiento Actual</span><span class="price-leader"></span><span class="price-val">$380.000</span></div>
+          <p class="price-note">A cargo de la Dra. Rosario Palacios · MN 44417 · MP 25887 — especializada en Armonización Orofacial. @dra.rosariopalacios</p>
+        </div>
+      </div>
+
+      <!-- Labios -->
+      <div class="price-panel" data-cat="labios">
+        <div class="price-visual" style="background-image: url('boca/despues.jpeg');">
+          <div class="price-visual-overlay">
+            <span class="price-visual-kicker">Armonización orofacial</span>
+            <h3>Labios</h3>
+          </div>
+        </div>
+        <div class="price-list">
+          <div class="price-row"><span class="price-name">Lip Filler <span>· Relleno de labios</span></span><span class="price-leader"></span><span class="price-val">$300.000</span></div>
+          <div class="price-row"><span class="price-name">Hydra Lips <span>· Hidratación de labios</span></span><span class="price-leader"></span><span class="price-val">$43.000</span></div>
+          <p class="price-note">A cargo de la Dra. Rosario Palacios · MN 44417 · MP 25887. @dra.rosariopalacios</p>
+        </div>
+      </div>
+
+    </div>
+
+    <a href="https://actual.site.agendapro.com/ar" target="_blank" rel="noopener" class="btn btn-filled fade-in" style="margin-top: 56px;">Agendar Turno</a>
   </div>
 </section>
 
@@ -1516,47 +1760,18 @@
     slider.addEventListener('touchend', () => { isDragging = false; });
   });
 
-  // ── Pricing Carousel ──
+  // ── Pricing Tabs ──
   (function() {
-    const track = document.getElementById('pricingTrack');
-    const dotsContainer = document.getElementById('pricingDots');
-    const slides = track.querySelectorAll('.pricing-slide');
-    const total = slides.length;
-    let current = 0;
+    const tabs = document.querySelectorAll('.price-tab');
+    const panels = document.querySelectorAll('.price-panel');
 
-    for (let i = 0; i < total; i++) {
-      const dot = document.createElement('span');
-      if (i === 0) dot.classList.add('active');
-      dot.addEventListener('click', () => goTo(i));
-      dotsContainer.appendChild(dot);
-    }
-
-    function goTo(index) {
-      current = (index + total) % total;
-      track.style.transform = 'translateX(-' + (current * 100) + '%)';
-      dotsContainer.querySelectorAll('span').forEach((d, i) => d.classList.toggle('active', i === current));
-    }
-
-    document.getElementById('pricingPrev').addEventListener('click', () => goTo(current - 1));
-    document.getElementById('pricingNext').addEventListener('click', () => goTo(current + 1));
-
-    // Touch swipe
-    let startX = 0;
-    track.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
-    track.addEventListener('touchend', (e) => {
-      const diff = startX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 50) goTo(current + (diff > 0 ? 1 : -1));
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const cat = tab.dataset.cat;
+        tabs.forEach(t => t.classList.toggle('active', t === tab));
+        panels.forEach(p => p.classList.toggle('active', p.dataset.cat === cat));
+      });
     });
-
-    // Auto-slide every 4 seconds on mobile
-    if (window.innerWidth <= 768) {
-      let autoSlide = setInterval(() => goTo(current + 1), 4000);
-      // Pause on touch, resume after
-      track.addEventListener('touchstart', () => clearInterval(autoSlide), { passive: true });
-      track.addEventListener('touchend', () => {
-        autoSlide = setInterval(() => goTo(current + 1), 4000);
-      }, { passive: true });
-    }
   })();
 </script>
 
