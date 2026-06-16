@@ -962,6 +962,8 @@
       color: var(--black);
     }
 
+    .price-tabs-bottom { display: none; }
+
     .price-panel { display: none; }
 
     .price-panel.active {
@@ -1165,6 +1167,7 @@
       .price-tab { padding: 9px 16px; font-size: 0.62rem; letter-spacing: 1px; }
       .price-name { font-size: 0.85rem; }
       .price-val { font-size: 1.15rem; }
+      .price-tabs-bottom { display: flex; margin: 40px 0 0; }
     }
   </style>
 </head>
@@ -1498,6 +1501,15 @@
 
     </div>
 
+    <div class="price-tabs price-tabs-bottom">
+      <button class="price-tab active" data-cat="manos">Manos</button>
+      <button class="price-tab" data-cat="pies">Pies</button>
+      <button class="price-tab" data-cat="eyes">Cejas &amp; Pestañas</button>
+      <button class="price-tab" data-cat="facial">Facial</button>
+      <button class="price-tab" data-cat="odonto">Odontología</button>
+      <button class="price-tab" data-cat="labios">Labios</button>
+    </div>
+
     <a href="https://actual.site.agendapro.com/ar" target="_blank" rel="noopener" class="btn btn-filled fade-in" style="margin-top: 56px;">Agendar Turno</a>
   </div>
 </section>
@@ -1768,7 +1780,7 @@
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         const cat = tab.dataset.cat;
-        tabs.forEach(t => t.classList.toggle('active', t === tab));
+        tabs.forEach(t => t.classList.toggle('active', t.dataset.cat === cat));
         panels.forEach(p => p.classList.toggle('active', p.dataset.cat === cat));
       });
     });
