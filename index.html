@@ -982,10 +982,10 @@
 
     .price-visual {
       position: relative;
-      min-height: 460px;
+      aspect-ratio: 3 / 4;
       border-radius: 16px;
       background-size: cover;
-      background-position: center;
+      background-position: center top;
       overflow: hidden;
       border: 1px solid rgba(201, 169, 110, 0.18);
     }
@@ -1151,7 +1151,7 @@
       .stat-item p { font-size: 0.55rem; letter-spacing: 2px; }
 
       .price-panel.active { grid-template-columns: 1fr; gap: 28px; }
-      .price-visual { min-height: 280px; }
+      .price-visual { max-width: 440px; margin: 0 auto; width: 100%; }
     }
 
     @media (max-width: 640px) {
