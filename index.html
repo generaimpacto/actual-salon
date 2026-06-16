@@ -1170,66 +1170,58 @@
     .combo-prices {
       border-top: 1px solid rgba(201, 169, 110, 0.15);
       padding-top: 18px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 12px;
     }
 
-    .combo-original {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .combo-original-label {
-      font-size: 0.58rem;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--light-gray);
-    }
-
-    .combo-original-val {
-      font-size: 1rem;
-      color: var(--light-gray);
-      text-decoration: line-through;
-      text-decoration-color: rgba(201, 169, 110, 0.7);
-      font-family: 'Cormorant Garamond', serif;
-    }
-
-    .combo-final {
-      text-align: right;
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-    }
-
-    .combo-final-label {
+    .combo-special-label {
+      display: block;
       font-size: 0.58rem;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       color: var(--gold);
+      margin-bottom: 2px;
     }
 
-    .combo-final-val {
+    .combo-special-val {
+      display: block;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 2.1rem;
+      font-size: 2.3rem;
       font-weight: 700;
       line-height: 1;
       color: var(--gold);
     }
 
-    .combo-save {
+    .combo-cash {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.82rem;
+      color: #9fb083;
+      letter-spacing: 0.3px;
+    }
+
+    .combo-cash strong {
+      font-weight: 600;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+    }
+
+    .combo-tag {
       align-self: flex-start;
-      margin-top: 14px;
-      font-size: 0.62rem;
-      letter-spacing: 1px;
+      display: inline-block;
+      background: var(--gold);
+      color: var(--black);
+      font-size: 0.56rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      color: var(--gold-light);
-      background: rgba(201, 169, 110, 0.12);
-      border: 1px solid rgba(201, 169, 110, 0.3);
-      padding: 5px 12px;
+      padding: 4px 12px;
       border-radius: 30px;
+      margin-bottom: 12px;
+    }
+
+    .combo-tag--soft {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid rgba(201, 169, 110, 0.55);
     }
 
     /* ── Animations ── */
@@ -1598,14 +1590,15 @@
     <div class="combos-grid fade-in">
 
       <div class="combo-card">
+        <span class="combo-tag">Más elegido</span>
         <h3 class="combo-name">Buenos Aires</h3>
         <p class="combo-tagline">Manos &amp; Pies</p>
         <p class="combo-services">Kapping Acrílico o Polygel + Belleza de Pies (Esmaltado Tradicional / Semi) / Actual Care</p>
         <div class="combo-prices">
-          <div class="combo-original"><span class="combo-original-label">Valor especial</span><span class="combo-original-val">$74.400</span></div>
-          <div class="combo-final"><span class="combo-final-label">En efectivo</span><span class="combo-final-val">$68.000</span></div>
+          <span class="combo-special-label">Valor especial</span>
+          <span class="combo-special-val">$74.400</span>
+          <span class="combo-cash">o <strong>$68.000</strong> en efectivo</span>
         </div>
-        <span class="combo-save">Ahorrás $6.400</span>
       </div>
 
       <div class="combo-card">
@@ -1613,10 +1606,10 @@
         <p class="combo-tagline">Labios</p>
         <p class="combo-services">Hydra Lips + Micropigmentación en Labios</p>
         <div class="combo-prices">
-          <div class="combo-original"><span class="combo-original-label">Valor especial</span><span class="combo-original-val">$232.500</span></div>
-          <div class="combo-final"><span class="combo-final-label">En efectivo</span><span class="combo-final-val">$212.000</span></div>
+          <span class="combo-special-label">Valor especial</span>
+          <span class="combo-special-val">$232.500</span>
+          <span class="combo-cash">o <strong>$212.000</strong> en efectivo</span>
         </div>
-        <span class="combo-save">Ahorrás $20.500</span>
       </div>
 
       <div class="combo-card">
@@ -1624,10 +1617,10 @@
         <p class="combo-tagline">Cejas</p>
         <p class="combo-services">Diseño y Perfilado de Cejas + Henna Pura</p>
         <div class="combo-prices">
-          <div class="combo-original"><span class="combo-original-label">Valor especial</span><span class="combo-original-val">$47.430</span></div>
-          <div class="combo-final"><span class="combo-final-label">En efectivo</span><span class="combo-final-val">$43.000</span></div>
+          <span class="combo-special-label">Valor especial</span>
+          <span class="combo-special-val">$47.430</span>
+          <span class="combo-cash">o <strong>$43.000</strong> en efectivo</span>
         </div>
-        <span class="combo-save">Ahorrás $4.430</span>
       </div>
 
       <div class="combo-card">
@@ -1635,21 +1628,22 @@
         <p class="combo-tagline">Cejas</p>
         <p class="combo-services">Laminado de Cejas + Henna Pura</p>
         <div class="combo-prices">
-          <div class="combo-original"><span class="combo-original-label">Valor especial</span><span class="combo-original-val">$72.540</span></div>
-          <div class="combo-final"><span class="combo-final-label">En efectivo</span><span class="combo-final-val">$66.000</span></div>
+          <span class="combo-special-label">Valor especial</span>
+          <span class="combo-special-val">$72.540</span>
+          <span class="combo-cash">o <strong>$66.000</strong> en efectivo</span>
         </div>
-        <span class="combo-save">Ahorrás $6.540</span>
       </div>
 
       <div class="combo-card">
+        <span class="combo-tag combo-tag--soft">Premium</span>
         <h3 class="combo-name">Maldivas</h3>
         <p class="combo-tagline">Facial</p>
         <p class="combo-services">Botox + Mesolift</p>
         <div class="combo-prices">
-          <div class="combo-original"><span class="combo-original-label">Valor especial</span><span class="combo-original-val">$520.800</span></div>
-          <div class="combo-final"><span class="combo-final-label">En efectivo</span><span class="combo-final-val">$475.000</span></div>
+          <span class="combo-special-label">Valor especial</span>
+          <span class="combo-special-val">$520.800</span>
+          <span class="combo-cash">o <strong>$475.000</strong> en efectivo</span>
         </div>
-        <span class="combo-save">Ahorrás $45.800</span>
       </div>
 
       <div class="combo-card">
@@ -1657,21 +1651,22 @@
         <p class="combo-tagline">Labios</p>
         <p class="combo-services">Lip Filler + Hydra Lips</p>
         <div class="combo-prices">
-          <div class="combo-original"><span class="combo-original-label">Valor especial</span><span class="combo-original-val">$344.100</span></div>
-          <div class="combo-final"><span class="combo-final-label">En efectivo</span><span class="combo-final-val">$315.000</span></div>
+          <span class="combo-special-label">Valor especial</span>
+          <span class="combo-special-val">$344.100</span>
+          <span class="combo-cash">o <strong>$315.000</strong> en efectivo</span>
         </div>
-        <span class="combo-save">Ahorrás $29.100</span>
       </div>
 
       <div class="combo-card">
+        <span class="combo-tag">Recomendado</span>
         <h3 class="combo-name">New York</h3>
         <p class="combo-tagline">Cejas &amp; Pestañas</p>
         <p class="combo-services">Diseño y Perfilado de Cejas + Lifting de Pestañas / Extensiones</p>
         <div class="combo-prices">
-          <div class="combo-original"><span class="combo-original-label">Valor especial</span><span class="combo-original-val">$65.000</span></div>
-          <div class="combo-final"><span class="combo-final-label">En efectivo</span><span class="combo-final-val">$59.500</span></div>
+          <span class="combo-special-label">Valor especial</span>
+          <span class="combo-special-val">$65.000</span>
+          <span class="combo-cash">o <strong>$59.500</strong> en efectivo</span>
         </div>
-        <span class="combo-save">Ahorrás $5.500</span>
       </div>
 
       <div class="combo-card">
@@ -1679,10 +1674,10 @@
         <p class="combo-tagline">Cejas &amp; Pestañas</p>
         <p class="combo-services">Microblading en Cejas + Lifting de Pestañas / Extensiones</p>
         <div class="combo-prices">
-          <div class="combo-original"><span class="combo-original-label">Valor especial</span><span class="combo-original-val">$238.080</span></div>
-          <div class="combo-final"><span class="combo-final-label">En efectivo</span><span class="combo-final-val">$218.000</span></div>
+          <span class="combo-special-label">Valor especial</span>
+          <span class="combo-special-val">$238.080</span>
+          <span class="combo-cash">o <strong>$218.000</strong> en efectivo</span>
         </div>
-        <span class="combo-save">Ahorrás $20.080</span>
       </div>
 
       <div class="combo-card">
@@ -1690,10 +1685,10 @@
         <p class="combo-tagline">Pies</p>
         <p class="combo-services">Podo-Estética / Podología de Alta Complejidad + Belleza de Pies (Esmaltado Tradicional / Semi)</p>
         <div class="combo-prices">
-          <div class="combo-original"><span class="combo-original-label">Valor especial</span><span class="combo-original-val">$74.400</span></div>
-          <div class="combo-final"><span class="combo-final-label">En efectivo</span><span class="combo-final-val">$68.000</span></div>
+          <span class="combo-special-label">Valor especial</span>
+          <span class="combo-special-val">$74.400</span>
+          <span class="combo-cash">o <strong>$68.000</strong> en efectivo</span>
         </div>
-        <span class="combo-save">Ahorrás $6.400</span>
       </div>
 
     </div>
