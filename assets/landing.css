@@ -461,6 +461,73 @@ body {
 
 .form-option.selected { background: var(--gold); border-color: var(--gold); color: var(--black); font-weight: 500; }
 
+/* Paso de contacto (nombre + teléfono) */
+.form-field { margin-bottom: 18px; }
+
+.form-label {
+  display: block;
+  font-size: 0.62rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  background: rgba(10, 10, 10, 0.6);
+  border: 1px solid rgba(201, 169, 110, 0.28);
+  border-radius: 8px;
+  color: var(--white);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem; /* mínimo 16px: iOS Safari zoomea la página con inputs más chicos */
+  font-weight: 300;
+  padding: 15px 18px;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.form-input::placeholder { color: var(--light-gray); opacity: 0.7; }
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--gold);
+  background: rgba(201, 169, 110, 0.06);
+}
+
+.form-input.invalid { border-color: #c96e6e; }
+
+.form-error {
+  display: none;
+  font-size: 0.72rem;
+  color: #d99090;
+  font-weight: 300;
+  line-height: 1.6;
+  margin-top: 8px;
+}
+
+.form-error.show { display: block; }
+
+.form-submit {
+  display: block;
+  width: 100%;
+  background: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  color: var(--black);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 17px 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 8px;
+}
+
+.form-submit:hover { background: var(--gold-light); border-color: var(--gold-light); transform: translateY(-2px); }
+
 .form-back {
   background: none;
   border: none;
