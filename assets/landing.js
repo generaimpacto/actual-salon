@@ -44,24 +44,41 @@
   document.querySelectorAll('.fade-in').forEach(function (el) { observer.observe(el); });
 
   // ── FAQ acordeón ──
+  // La altura se anima en píxeles, pero al terminar la transición se libera a
+  // 'none'. Si se dejara el valor fijo, al rotar el celular o redimensionar la
+  // ventana el texto quedaría cortado.
+  function collapse(item) {
+    var answer = item.querySelector('.faq-a');
+    // Volver de 'none' a un valor concreto para que la transición tenga desde dónde salir
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+    void answer.offsetHeight; // fuerza reflow
+    item.classList.remove('open');
+    answer.style.maxHeight = null;
+    item.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+  }
+
+  function expand(item) {
+    var answer = item.querySelector('.faq-a');
+    item.classList.add('open');
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+    item.querySelector('.faq-q').setAttribute('aria-expanded', 'true');
+
+    answer.addEventListener('transitionend', function release(e) {
+      if (e.propertyName !== 'max-height') return;
+      answer.removeEventListener('transitionend', release);
+      if (item.classList.contains('open')) answer.style.maxHeight = 'none';
+    });
+  }
+
   document.querySelectorAll('.faq-q').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var item = btn.closest('.faq-item');
-      var answer = item.querySelector('.faq-a');
-      var isOpen = item.classList.contains('open');
+      var wasOpen = item.classList.contains('open');
 
-      // Cierra el resto para que quede uno solo abierto
-      document.querySelectorAll('.faq-item.open').forEach(function (other) {
-        other.classList.remove('open');
-        other.querySelector('.faq-a').style.maxHeight = null;
-        other.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
-      });
+      // Deja una sola respuesta abierta a la vez
+      document.querySelectorAll('.faq-item.open').forEach(collapse);
 
-      if (!isOpen) {
-        item.classList.add('open');
-        answer.style.maxHeight = answer.scrollHeight + 'px';
-        btn.setAttribute('aria-expanded', 'true');
-      }
+      if (!wasOpen) expand(item);
     });
   });
 
