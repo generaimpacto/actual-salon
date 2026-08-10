@@ -1242,6 +1242,87 @@
       box-shadow: inset 0 -1px 0 rgba(201, 169, 110, 0.4);
     }
 
+    /* ── Equipo (se arma desde la app) ── */
+    /* Oculta hasta que la API responde: si falla, la sección se elimina sola
+       y nunca queda un bloque vacío en la página. */
+    #equipo { display: none; }
+    #equipo.cargado { display: block; }
+
+    .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+
+    .team-card {
+      background: var(--dark-gray);
+      border: 1px solid rgba(201, 169, 110, 0.12);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: border-color 0.4s ease, transform 0.4s ease;
+    }
+
+    a.team-card:hover { border-color: rgba(201, 169, 110, 0.45); transform: translateY(-4px); }
+
+    .team-photo {
+      width: 104px;
+      height: 104px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 18px;
+      border: 1px solid rgba(201, 169, 110, 0.3);
+      background: var(--medium-gray);
+      flex-shrink: 0;
+    }
+
+    .team-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .team-photo.sin-foto {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+    }
+
+    .team-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      line-height: 1.35;
+    }
+
+    .team-role {
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--light-gray);
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    .team-cta {
+      margin-top: 16px;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    a.team-card:hover .team-cta { opacity: 1; }
+
+    /* En touch no hay hover: el CTA queda visible siempre */
+    @media (hover: none) { .team-cta { opacity: 1; } }
+
     /* ── Animations ── */
     .fade-in {
       opacity: 0;
@@ -1290,11 +1371,17 @@
       .price-visual { max-width: 440px; margin: 0 auto; width: 100%; }
 
       .combos-grid { grid-template-columns: 1fr 1fr; }
+      .team-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
     }
 
     @media (max-width: 640px) {
       .services-grid { grid-template-columns: 1fr; }
       .combos-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+      .team-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .team-card { padding: 22px 12px; }
+      .team-photo { width: 84px; height: 84px; margin-bottom: 14px; }
+      .team-name { font-size: 1rem; }
+      .team-role { font-size: 0.6rem; letter-spacing: 1.5px; }
       .results-grid { grid-template-columns: 1fr; max-width: 320px; margin-left: auto; margin-right: auto; margin-bottom: 48px; }
       .section-padding { padding: 72px 0; }
       .hero-title { letter-spacing: -2px; font-size: clamp(1.8rem, 8vw, 2.8rem); }
@@ -1321,8 +1408,9 @@
       <li><a href="#resultados">Resultados</a></li>
       <li><a href="#precios">Precios</a></li>
       <li><a href="#combos">Combos</a></li>
+      <li><a href="#equipo">Equipo</a></li>
       <li><a href="#ubicacion">Ubicacion</a></li>
-      <li><a href="https://actual.site.agendapro.com/ar" target="_blank" rel="noopener" class="navbar-cta">Agendar Turno</a></li>
+      <li><a href="https://app.actualnails.com/reserva" target="_blank" rel="noopener" class="navbar-cta">Agendar Turno</a></li>
     </ul>
     <button class="hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -1336,7 +1424,7 @@
     <p class="hero-label">Salón de Salud y Belleza</p>
     <h1 class="hero-title">Una experiencia que se siente <span class="gold dynamic-word">única.</span></h1>
     <div class="hero-line"></div>
-    <a href="https://actual.site.agendapro.com/ar" target="_blank" rel="noopener" class="btn btn-filled">Agendar Turno</a>
+    <a href="https://app.actualnails.com/reserva" target="_blank" rel="noopener" class="btn btn-filled">Agendar Turno</a>
   </div>
 </section>
 
@@ -1436,7 +1524,7 @@
 
     </div>
 
-    <a href="https://actual.site.agendapro.com/ar" target="_blank" rel="noopener" class="btn btn-filled">Agenda tu turno</a>
+    <a href="https://app.actualnails.com/reserva" target="_blank" rel="noopener" class="btn btn-filled">Agenda tu turno</a>
   </div>
 </section>
 
@@ -1593,7 +1681,7 @@
       <button class="price-tab" data-cat="labios">Labios</button>
     </div>
 
-    <a href="https://actual.site.agendapro.com/ar" target="_blank" rel="noopener" class="btn btn-filled fade-in" style="margin-top: 56px;">Agendar Turno</a>
+    <a href="https://app.actualnails.com/reserva" target="_blank" rel="noopener" class="btn btn-filled fade-in" style="margin-top: 56px;">Agendar Turno</a>
   </div>
 </section>
 
@@ -1711,7 +1799,22 @@
 
     </div>
 
-    <a href="https://actual.site.agendapro.com/ar" target="_blank" rel="noopener" class="btn btn-filled fade-in" style="margin-top: 56px;">Agendar Turno</a>
+    <a href="https://app.actualnails.com/reserva" target="_blank" rel="noopener" class="btn btn-filled fade-in" style="margin-top: 56px;">Agendar Turno</a>
+  </div>
+</section>
+
+<!-- ── Equipo ── -->
+<!-- Las tarjetas las arma assets/equipo.js con lo que devuelve la app.
+     Altas y bajas de profesionales se reflejan solas. -->
+<section class="section-padding" id="equipo" style="background: var(--dark);">
+  <div class="container text-center">
+    <h2 class="section-title fade-in">Nuestro Equipo</h2>
+    <p class="section-subtitle fade-in">quiénes te atienden</p>
+    <div class="divider"></div>
+
+    <div class="team-grid" id="equipoGrid"></div>
+
+    <a href="https://app.actualnails.com/reserva" target="_blank" rel="noopener" class="btn btn-filled" style="margin-top: 56px;">Agendar Turno</a>
   </div>
 </section>
 
@@ -1747,7 +1850,7 @@
           </div>
         </a>
 
-        <a href="https://actual.site.agendapro.com/ar" target="_blank" rel="noopener" class="btn" style="margin-top: 16px;">Agendar Turno</a>
+        <a href="https://app.actualnails.com/reserva" target="_blank" rel="noopener" class="btn" style="margin-top: 16px;">Agendar Turno</a>
       </div>
       <div class="fade-in">
         <div class="map-container">
@@ -1828,8 +1931,9 @@
         <ul class="footer-links">
           <li><a href="#nosotros">Nosotros</a></li>
           <li><a href="#resultados">Resultados</a></li>
+          <li><a href="#equipo">Equipo</a></li>
           <li><a href="#ubicacion">Ubicacion</a></li>
-          <li><a href="https://actual.site.agendapro.com/ar" target="_blank" rel="noopener">Agendar Turno</a></li>
+          <li><a href="https://app.actualnails.com/reserva" target="_blank" rel="noopener">Agendar Turno</a></li>
         </ul>
       </div>
     </div>
@@ -1940,7 +2044,7 @@
     slider.addEventListener('touchend', () => { isDragging = false; });
   });
 
-  // ── Pricing Tabs ──
+  // ── Pricing Tabs (el equipo lo arma assets/equipo.js) ──
   (function() {
     const tabs = document.querySelectorAll('.price-tab');
     const panels = document.querySelectorAll('.price-panel');
@@ -1962,6 +2066,7 @@
     });
   })();
 </script>
+<script src="/assets/equipo.js"></script>
 
 </body>
 </html>
