@@ -76,6 +76,19 @@
     return row;
   }
 
+  // Notas al pie de cada pestaña que ya vienen en el HTML: matrícula de la
+  // profesional a cargo, aclaraciones de qué incluye cada servicio. Son datos que
+  // el sistema no tiene, así que se rescatan ANTES de reconstruir y se vuelven a
+  // poner. Sin esto el rebuild las borraba (y con ellas la matrícula, que en
+  // servicios de salud tiene que estar publicada).
+  var notasPrevias = {};
+  if (panels) {
+    panels.querySelectorAll('.price-panel').forEach(function (p) {
+      var notas = p.querySelectorAll('.price-note');
+      if (notas.length) notasPrevias[p.dataset.cat] = [].map.call(notas, function (n) { return n.cloneNode(true); });
+    });
+  }
+
   function panel(pestana, activo) {
     var div = crear('div', 'price-panel' + (activo ? ' active' : ''));
     div.dataset.cat = pestana.slug;
@@ -96,6 +109,10 @@
       if (grupo.subtitulo) lista.appendChild(crear('p', 'price-subhead', grupo.subtitulo));
       grupo.servicios.forEach(function (s) { lista.appendChild(fila(s)); });
     });
+
+    // Se reponen las notas al pie que tenía esta pestaña en el HTML.
+    (notasPrevias[pestana.slug] || []).forEach(function (n) { lista.appendChild(n); });
+
     div.appendChild(lista);
 
     return div;
@@ -167,7 +184,17 @@
     })
     .catch(function (err) {
       console.warn('ACTUAL: no se pudo cargar la lista de precios —', err.message);
-      // Se deja el HTML estático como está.
+      // El HTML de respaldo lista los servicios pero SIN montos (dicen
+      // "Consultanos"): publicar precios viejos es peor que no publicarlos.
+      // Se agrega un aviso para que la clienta sepa por dónde preguntar.
+      if (seccion && !seccion.querySelector('.price-fallback-aviso')) {
+        var aviso = document.createElement('p');
+        aviso.className = 'price-fallback-aviso';
+        aviso.style.cssText = 'color:var(--gold);font-size:0.8rem;margin-top:24px;font-weight:300;';
+        aviso.textContent = 'No pudimos cargar los precios actualizados. Escribinos por WhatsApp y te los pasamos al toque.';
+        var cont = seccion.querySelector('.container');
+        if (cont) cont.appendChild(aviso);
+      }
     });
 
   function cablearTabs() {
