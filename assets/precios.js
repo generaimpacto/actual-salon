@@ -26,8 +26,10 @@
   var panels = seccion && seccion.querySelector('.price-panels');
   var puedeArmarLista = !!(tabsArriba && panels);
 
-  // Imágenes de portada por pestaña. Son las que ya usa el sitio; si el sistema
-  // trae una imagen propia para la categoría, esa gana.
+  // Imágenes de portada por pestaña: las editoriales (negro + dorado) hechas para
+  // la web. Tienen prioridad sobre la imagen de la categoría en el sistema, que es
+  // una foto operativa pensada para la reserva y rompe la estética del sitio.
+  // Para una pestaña nueva sin imagen acá, se usa la del sistema como respaldo.
   var IMAGENES = {
     manos: '/categorias/manos.jpg',
     pies: '/categorias/pies.jpg',
@@ -79,7 +81,7 @@
     div.dataset.cat = pestana.slug;
 
     var visual = crear('div', 'price-visual');
-    var img = pestana.imagenUrl || IMAGENES[pestana.slug];
+    var img = IMAGENES[pestana.slug] || pestana.imagenUrl;
     if (img) visual.style.backgroundImage = "url('" + img + "')";
     var overlay = crear('div', 'price-visual-overlay');
     if (KICKERS[pestana.slug]) {
