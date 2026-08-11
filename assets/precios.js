@@ -1,0 +1,189 @@
+/* ══════════════════════════════════════════════════════════════
+   ACTUAL · Lista de precios (dinámica)
+
+   Reemplaza las pestañas y precios estáticos por lo que devuelve la
+   app. Cambiar un precio o destildar "mostrar en web" en el sistema
+   se refleja acá sin tocar el HTML.
+
+   Si la API no responde, se deja intacta la lista que ya está en el
+   HTML: precios viejos son mejores que ningún precio.
+   ══════════════════════════════════════════════════════════════ */
+
+(function () {
+  'use strict';
+
+  var API = 'https://app.actualnails.com/api/publico/precios';
+  var RESERVA = 'https://app.actualnails.com/reserva/';
+
+  var seccion = document.getElementById('precios');
+  // En las landings no hay lista de precios, pero sí montos sueltos marcados con
+  // data-precio-slug. Si no hay ninguna de las dos cosas, no hay nada que hacer.
+  var sueltos = document.querySelectorAll('[data-precio-slug]');
+  if (!seccion && !sueltos.length) return;
+
+  var tabsArriba = seccion && seccion.querySelector('.price-tabs:not(.price-tabs-bottom)');
+  var tabsAbajo = seccion && seccion.querySelector('.price-tabs-bottom');
+  var panels = seccion && seccion.querySelector('.price-panels');
+  var puedeArmarLista = !!(tabsArriba && panels);
+
+  // Imágenes de portada por pestaña. Son las que ya usa el sitio; si el sistema
+  // trae una imagen propia para la categoría, esa gana.
+  var IMAGENES = {
+    manos: '/categorias/manos.jpg',
+    pies: '/categorias/pies.jpg',
+    eyes: '/categorias/cejas.jpg',
+    facial: '/categorias/facial.jpg',
+    odonto: '/categorias/odonto.jpg',
+    labios: '/categorias/labios.jpg'
+  };
+
+  // Bajada que va sobre la imagen de cada pestaña. Son las mismas que tenía el
+  // HTML estático: viven acá porque son copy de la web, no dato del sistema.
+  var KICKERS = {
+    manos: 'Comenzamos por el cuidado de tus uñas',
+    pies: 'Cuidado integral para tus pies',
+    eyes: 'Realza tu mirada',
+    facial: 'Rejuvenecimiento facial',
+    odonto: 'Y ahora sí, tu sonrisa',
+    labios: 'Armonización orofacial'
+  };
+
+  function crear(tag, clase, texto) {
+    var el = document.createElement(tag);
+    if (clase) el.className = clase;
+    if (texto != null) el.textContent = texto;
+    return el;
+  }
+
+  function fila(servicio) {
+    var row = crear('div', 'price-row');
+
+    var nombre = crear('span', 'price-name');
+    nombre.appendChild(document.createTextNode(servicio.nombre));
+    if (servicio.detalle) {
+      nombre.appendChild(crear('span', null, ' · ' + servicio.detalle));
+    }
+    row.appendChild(nombre);
+
+    row.appendChild(crear('span', 'price-leader'));
+
+    // "desde $90.000" cuando el precio es un piso
+    var valor = servicio.desde ? 'desde ' + servicio.precio : servicio.precio;
+    row.appendChild(crear('span', 'price-val', valor));
+
+    return row;
+  }
+
+  function panel(pestana, activo) {
+    var div = crear('div', 'price-panel' + (activo ? ' active' : ''));
+    div.dataset.cat = pestana.slug;
+
+    var visual = crear('div', 'price-visual');
+    var img = pestana.imagenUrl || IMAGENES[pestana.slug];
+    if (img) visual.style.backgroundImage = "url('" + img + "')";
+    var overlay = crear('div', 'price-visual-overlay');
+    if (KICKERS[pestana.slug]) {
+      overlay.appendChild(crear('span', 'price-visual-kicker', KICKERS[pestana.slug]));
+    }
+    overlay.appendChild(crear('h3', null, pestana.nombre));
+    visual.appendChild(overlay);
+    div.appendChild(visual);
+
+    var lista = crear('div', 'price-list');
+    pestana.grupos.forEach(function (grupo) {
+      if (grupo.subtitulo) lista.appendChild(crear('p', 'price-subhead', grupo.subtitulo));
+      grupo.servicios.forEach(function (s) { lista.appendChild(fila(s)); });
+    });
+    div.appendChild(lista);
+
+    return div;
+  }
+
+  function tab(pestana, activo) {
+    var btn = crear('button', 'price-tab' + (activo ? ' active' : ''), pestana.nombre);
+    btn.type = 'button';
+    btn.dataset.cat = pestana.slug;
+    return btn;
+  }
+
+  fetch(API, { headers: { Accept: 'application/json' } })
+    .then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    })
+    .then(function (data) {
+      var pestanas = (data && data.pestanas) || [];
+      if (!pestanas.length) throw new Error('sin precios');
+
+      // Montos sueltos de las landings: se buscan por slug en todas las pestañas.
+      if (sueltos.length) {
+        var porSlug = {};
+        pestanas.forEach(function (p) {
+          p.grupos.forEach(function (g) {
+            g.servicios.forEach(function (s) { if (s.slug) porSlug[s.slug] = s; });
+          });
+        });
+        sueltos.forEach(function (el) {
+          var s = porSlug[el.dataset.precioSlug];
+          if (!s) return; // servicio despublicado: se deja el texto que ya estaba
+          el.textContent = s.desde ? 'desde ' + s.precio : s.precio;
+        });
+      }
+
+      if (!puedeArmarLista) return;
+
+      // Se conserva la pestaña que el visitante tenga abierta (por si ya tocó una).
+      var activaPrevia = seccion.querySelector('.price-tab.active');
+      var slugActivo = activaPrevia ? activaPrevia.dataset.cat : pestanas[0].slug;
+      if (!pestanas.some(function (p) { return p.slug === slugActivo; })) {
+        slugActivo = pestanas[0].slug;
+      }
+
+      var fragTabs = document.createDocumentFragment();
+      var fragTabs2 = document.createDocumentFragment();
+      var fragPanels = document.createDocumentFragment();
+
+      pestanas.forEach(function (p) {
+        var activo = p.slug === slugActivo;
+        fragTabs.appendChild(tab(p, activo));
+        if (tabsAbajo) fragTabs2.appendChild(tab(p, activo));
+        fragPanels.appendChild(panel(p, activo));
+      });
+
+      tabsArriba.innerHTML = '';
+      tabsArriba.appendChild(fragTabs);
+      if (tabsAbajo) {
+        tabsAbajo.innerHTML = '';
+        tabsAbajo.appendChild(fragTabs2);
+      }
+      panels.innerHTML = '';
+      panels.appendChild(fragPanels);
+
+      // El listener de tabs del HTML se enganchó a los botones viejos, que ya no
+      // existen. Se vuelve a cablear sobre los nuevos con la misma lógica.
+      cablearTabs();
+    })
+    .catch(function (err) {
+      console.warn('ACTUAL: no se pudo cargar la lista de precios —', err.message);
+      // Se deja el HTML estático como está.
+    });
+
+  function cablearTabs() {
+    var tabs = seccion.querySelectorAll('.price-tab');
+    var paneles = seccion.querySelectorAll('.price-panel');
+
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        var cat = t.dataset.cat;
+        tabs.forEach(function (o) { o.classList.toggle('active', o.dataset.cat === cat); });
+        paneles.forEach(function (p) { p.classList.toggle('active', p.dataset.cat === cat); });
+
+        // Igual que antes: si se usó el set de abajo (mobile), subir a los de arriba.
+        if (t.closest('.price-tabs-bottom') && tabsArriba) {
+          var destino = tabsArriba.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: destino, behavior: 'smooth' });
+        }
+      });
+    });
+  }
+})();
