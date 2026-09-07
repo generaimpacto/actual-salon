@@ -149,6 +149,12 @@
         });
       }
 
+      // Sección Combos de la home: se rearma con los combos marcados "en la web" en el
+      // sistema. Si el sistema no manda ninguno se deja el HTML tal cual, por la misma
+      // razón que la lista: una sección vacía es peor que una desactualizada.
+      var combos = (data && data.combos) || [];
+      if (combos.length) armarCombos(combos);
+
       if (!puedeArmarLista) return;
 
       // Se conserva la pestaña que el visitante tenga abierta (por si ya tocó una).
@@ -196,6 +202,34 @@
         if (cont) cont.appendChild(aviso);
       }
     });
+
+  function tarjetaCombo(c) {
+    var card = crear('div', 'combo-card');
+    card.appendChild(crear('h3', 'combo-name', c.nombre));
+    if (c.descripcion) card.appendChild(crear('p', 'combo-tagline', c.descripcion));
+    if (c.servicios) card.appendChild(crear('p', 'combo-services', c.servicios));
+
+    var precios = crear('div', 'combo-prices');
+    precios.appendChild(crear('span', 'combo-special-label', 'Valor especial'));
+    precios.appendChild(crear('span', 'combo-special-val', c.precio));
+    if (c.precioEfectivo && c.precioEfectivo !== c.precio) {
+      var cash = crear('span', 'combo-cash', 'o ');
+      cash.appendChild(crear('strong', null, c.precioEfectivo));
+      cash.appendChild(document.createTextNode(' en efectivo'));
+      precios.appendChild(cash);
+    }
+    card.appendChild(precios);
+    return card;
+  }
+
+  function armarCombos(combos) {
+    var grid = document.querySelector('#combos .combos-grid');
+    if (!grid) return;
+    var frag = document.createDocumentFragment();
+    combos.forEach(function (c) { frag.appendChild(tarjetaCombo(c)); });
+    grid.innerHTML = '';
+    grid.appendChild(frag);
+  }
 
   function cablearTabs() {
     var tabs = seccion.querySelectorAll('.price-tab');
